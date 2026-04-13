@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The coBranding Process</title>
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500&display=swap" rel="stylesheet">
+<style>
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: #F7F2EF;
+  font-family: 'Montserrat', sans-serif;
+  padding: 32px 24px;
+  color: #22252A;
+}
+.hint {
+  font-size: 11px;
+  color: #bbb;
+  text-align: center;
+  margin-bottom: 1.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  max-width: 820px;
+  margin: 0 auto;
+}
+.flip-wrap {
+  cursor: pointer;
+  position: relative;
+}
+.sizer {
+  visibility: hidden;
+  padding: 1.5rem;
+  pointer-events: none;
+}
+.sizer-num { font-size: 10px; margin-bottom: 0.4rem; }
+.sizer-title { font-size: 14px; font-weight: 500; margin-bottom: 0.75rem; padding-bottom: 0.75rem; border-bottom: 0.5px solid transparent; }
+.sizer-body { font-size: 12px; line-height: 1.7; }
+.flip-inner {
+  position: absolute;
+  inset: 0;
+  transition: transform 0.55s cubic-bezier(.4,0,.2,1);
+  transform-style: preserve-3d;
+}
+.flip-wrap.flipped .flip-inner {
+  transform: rotateY(180deg);
+}
+.face {
+  position: absolute;
+  inset: 0;
+  border-radius: 16px;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+  padding: 1.5rem;
+  display: flex;
+  flex-direction: column;
+}
+.front {
+  background: #7E8C7A;
+  justify-content: flex-end;
+}
+.back {
+  background: white;
+  border: 1px solid #e0dbd5;
+  transform: rotateY(180deg);
+  justify-content: flex-start;
+}
+.front-num {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255,255,255,0.6);
+  margin-bottom: auto;
+}
+.front-title {
+  font-size: 18px;
+  font-weight: 500;
+  color: white;
+  line-height: 1.3;
+}
+.front-tap {
+  font-size: 10px;
+  color: rgba(255,255,255,0.5);
+  margin-top: 0.75rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+.back-num {
+  font-size: 10px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: #7E8C7A;
+  margin-bottom: 0.4rem;
+}
+.back-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: #22252A;
+  margin-bottom: 0.75rem;
+  padding-bottom: 0.75rem;
+  border-bottom: 0.5px solid #e0dbd5;
+}
+.back-body {
+  font-size: 12px;
+  color: #6b6e72;
+  line-height: 1.7;
+}
+@media (max-width: 580px) {
+  .grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 380px) {
+  .grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+<p class="hint">tap each phase to explore</p>
+<div class="grid" id="grid"></div>
+<script>
+const phases = [
+  {
+    num: "Phase 01",
+    title: "Strategic Deep Dive",
+    body: "A 90-minute proprietary process that builds your entire foundation. We map your ideal client, financial goals, offer clarity, and website content — then build a collaborative mood board so your visual direction is felt before it's designed. Business card details collected here too."
+  },
+  {
+    num: "Phase 02",
+    title: "Visual Identity",
+    body: "Three designers each bring a distinct creative angle to a live session. You see real directions in real time, share what resonates, and we refine together until your logo suite feels exactly right. No guesswork. No back-and-forth over email."
+  },
+  {
+    num: "Phase 03",
+    title: "Brand Deliverables",
+    body: "Your full brand presentation: color palette reviewed for accessibility, typography, symbols, and logo suite — ready for your approval. Business card and email signature designs completed here. One revision round included; additional scope available if you want to go deeper."
+  },
+  {
+    num: "Phase 04",
+    title: "Copywriting",
+    body: "We walk you through a detailed document mapping every section of your future website — the content, the feel, the flow. From there, our copywriter drafts your full website copy with two rounds of revisions to make sure every word sounds like you."
+  },
+  {
+    num: "Phase 05",
+    title: "Website Design",
+    body: "Your brand comes to life as a streamlined, mobile-optimized one-page site designed to guide the right clients from introduction to inquiry — without friction. Two rounds of revisions included. Additional pages available as an add-on."
+  },
+  {
+    num: "Phase 06",
+    title: "Launch + Beyond",
+    body: "Domain connected, business card and email signature finalized with your confirmed details, 13-page brand guide delivered, full logo file package in every format and color — plus a post-launch visibility guide to get you everywhere your clients are looking."
+  }
+];
+const grid = document.getElementById('grid');
+phases.forEach(p => {
+  const wrap = document.createElement('div');
+  wrap.className = 'flip-wrap';
+  wrap.innerHTML = `
+    <div class="sizer">
+      <div class="sizer-num">${p.num}</div>
+      <div class="sizer-title">${p.title}</div>
+      <div class="sizer-body">${p.body}</div>
+    </div>
+    <div class="flip-inner">
+      <div class="face front">
+        <div class="front-num">${p.num}</div>
+        <div class="front-title">${p.title}</div>
+        <div class="front-tap">tap to explore</div>
+      </div>
+      <div class="face back">
+        <div class="back-num">${p.num}</div>
+        <div class="back-title">${p.title}</div>
+        <div class="back-body">${p.body}</div>
+      </div>
+    </div>`;
+  wrap.onclick = () => wrap.classList.toggle('flipped');
+  grid.appendChild(wrap);
+});
+</script>
+</body>
+</html>
